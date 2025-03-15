@@ -326,7 +326,13 @@
     </section>
   </div>
   <!-- Email Subscription Form -->
-  <div class="fixed bottom-4 right-4 z-50 max-w-md w-full">
+  <div id="subscription-form" class="fixed bottom-4 right-4 z-50 max-w-md w-full">
+    <button 
+      onclick="dismissSubscriptionForm()" 
+      class="absolute -top-2 -right-2 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-800 z-50"
+      aria-label="Close subscription form">
+      ✕
+    </button>
     <iframe 
       src="https://embeds.beehiiv.com/c78f78c7-4c17-4863-9cbf-dee80b3367b2" 
       data-test-id="beehiiv-embed" 
@@ -382,6 +388,21 @@
       const caret = element.querySelector('.caret');
       caret.textContent = caret.textContent === '▼' ? '▲' : '▼';
     }
+
+    function dismissSubscriptionForm() {
+      const form = document.getElementById('subscription-form');
+      form.style.display = 'none';
+      // Store the dismissal in localStorage so it stays dismissed on page refresh
+      localStorage.setItem('subscriptionFormDismissed', 'true');
+    }
+
+    // Check if the form was previously dismissed
+    window.addEventListener('load', function() {
+      if (localStorage.getItem('subscriptionFormDismissed') === 'true') {
+        const form = document.getElementById('subscription-form');
+        form.style.display = 'none';
+      }
+    });
   </script>
 </body>
 
